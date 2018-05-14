@@ -1,0 +1,22 @@
+{
+  "name": "lightchart",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/xiongxt/lightchart.git"
+  },
+  "author": "xiongxiaotao",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/xiongxt/lightchart/issues"
+  },
+  "homepage": "https://github.com/xiongxt/lightchart#readme",
+  "devDependencies": {
+    "webpack": "^4.8.3"
+  }
+}
