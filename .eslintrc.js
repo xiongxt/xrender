@@ -11,7 +11,7 @@ module.exports = {
         'standard'
     ],
     rules: {
-        'semi': ['error', 'always'],
+        'semi': ["error", "always", { "omitLastInOneLineBlock": true }],
         "indent": ["error", 4]
     }
 };

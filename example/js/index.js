@@ -1,4 +1,3 @@
-let a = true;
-if (a) {
-    alert('123');
-}
+import lightChart from '../../src';
+
+lightChart.init();
