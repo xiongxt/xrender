@@ -1,21 +1,33 @@
 import Context from './core/context';
-
+import Rect from './vnodes/rect';
+import Line from './vnodes/line';
+import Font from './vnodes/font';
 export default {
     init (config = {
         type: 'bar',
-        data: []
+        data: [
+
+        ]
     }) {
-        // let canvas = document.createElement('canvas');
-        // canvas.width = 200;
-        // canvas.height = 200;
-        // canvas.style.border = '1px solid #ccc';
-
-        // document.body.appendChild(canvas);
-
-        // let context = canvas.getContext('2d');
-        // context.fillStyle = '#ff0000';
-        // context.fillRect(0, 0, 150, 75);
         let ctx = new Context();
-        ctx.render();
+        ctx.render(config.el, [
+            new Rect({
+                start: { x: 0, y: 0 },
+                width: 150,
+                height: 200,
+                backgroundColor: '#ff6600'
+            }),
+            new Line({
+                start: { x: 0, y: 400 },
+                end: { x: 200, y: 200 }
+            }),
+            new Font({
+                start: { x: 200, y: 0 },
+                text: 'hello world 中文测试',
+                fontSize: '16px',
+                lineWidth: 10,
+                color: '#cccccc'
+            })
+        ]);
     }
 };
