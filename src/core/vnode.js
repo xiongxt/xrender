@@ -1,7 +1,9 @@
 export default class VNode {
     constructor (config = {}) {
-        Object.assign(this, config);
+        Object.assign(this, this.defaultConfig(), config);
+        console.log(this);
     }
-    render () {
+    defaultConfig () {
+        return {};
     }
 }

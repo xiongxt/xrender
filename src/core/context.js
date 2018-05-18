@@ -4,11 +4,11 @@ export default class Context {
         this.context = this.canvas.getContext('2d');
     }
     render (el, children = []) {
-        this.canvas.width = el.clientWidth;
-        this.canvas.height = el.clientHeight;
+        this.canvas.style.width = `${el.clientWidth}px`;
+        this.canvas.style.height = `${el.clientHeight}px`;
+        this.canvas.width = el.clientWidth * 1;
+        this.canvas.height = el.clientHeight * 1;
         el.appendChild(this.canvas);
-        this.context.fillStyle = '#ff0000';
-        this.context.fillRect(0, 0, 150, 75);
         children.forEach(item => {
             item.render(this.context);
         });

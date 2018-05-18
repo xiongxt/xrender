@@ -1,16 +1,37 @@
 import VNode from '../core/vnode';
 export default class Rect extends VNode {
-    constructor (config = {
-        start: { x: 0, y: 0 },
-        width: 0,
-        height: 0,
-        backgroundColor: '#ff0000'
-    }) {
+    constructor (config = {}) {
         super(config);
     }
 
+    defaultConfig () {
+        return {
+            start: { x: 0, y: 0 },
+            width: 0,
+            height: 0,
+            lineWidth: 1,
+            stroke: true,
+            fill: false,
+            strokeStyle: '#ff0000',
+            fillStyle: '#ff0000'
+        };
+    }
+
     render (context) {
-        context.fillStyle = this.backgroundColor;
-        context.fillRect(this.start.x, this.start.y, this.width, this.height);
+        if (this.stroke) {
+            context.beginPath();
+            context.lineWidth = this.lineWidth;
+            context.strokeStyle = this.strokeStyle;
+            context.rect(this.start.x, this.start.y, this.width, this.height);
+            context.stroke();
+            context.closePath();
+        }
+        if (this.fill) {
+            context.beginPath();
+            context.rect(this.start.x, this.start.y, this.width, this.height);
+            context.fillStyle = this.fillStyle;
+            context.fill();
+            context.closePath();
+        }
     }
 }
