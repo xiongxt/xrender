@@ -6,7 +6,10 @@ export default class Rect extends VNode {
 
     defaultConfig () {
         return {
-            start: { x: 0, y: 0 },
+            start: {
+                x: 0,
+                y: 0
+            },
             width: 0,
             height: 0,
             lineWidth: 1,
@@ -24,14 +27,12 @@ export default class Rect extends VNode {
             context.strokeStyle = this.strokeStyle;
             context.rect(this.start.x, this.start.y, this.width, this.height);
             context.stroke();
-            context.closePath();
         }
         if (this.fill) {
             context.beginPath();
             context.rect(this.start.x, this.start.y, this.width, this.height);
             context.fillStyle = this.fillStyle;
             context.fill();
-            context.closePath();
         }
     }
 }

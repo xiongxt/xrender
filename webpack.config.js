@@ -9,29 +9,27 @@ const config = {
     entry: './example/js/index.js',
     output: {
         filename: 'js/[name].[hash].js',
-        path: __dirname + '/example/dist',//生成文件的目录
+        path: __dirname + '/example/dist', //生成文件的目录
         // publicPath: "/dist/"
     },
     devServer: {
-        contentBase: "./dist",//dist为你需要注册静态服务的文件夹
-        port: "8090",//端口
+        contentBase: "./dist", //dist为你需要注册静态服务的文件夹
+        port: "8091", //端口
         inline: true, //表示代码修改后页面自动刷新
-        hot: true//便是模块热替换
+        hot: true //便是模块热替换
     },
     module: {
         rules: [{
             test: /\.js?$/,
             exclude: /node_modules/,
-            use: [
-                {
-                    loader: "babel-loader",
-                    options: {
-                        presets: [
-                            ["env"]
-                        ]
-                    }
+            use: [{
+                loader: "babel-loader",
+                options: {
+                    presets: [
+                        ["env"]
+                    ]
                 }
-            ]
+            }]
         }, {
             test: /\.js?$/,
             enforce: 'pre',
@@ -43,13 +41,13 @@ const config = {
     },
     plugins: [
         new HtmlWebpackPlugin({
-            template: './example/index.html',//html源文件所在位置
-            filename: 'index.html',//输出文件的文件名
+            template: './example/index.html', //html源文件所在位置
+            filename: 'index.html', //输出文件的文件名
             minify: {
-                removeAttributeQuotes: true,//移除属性的引号
-                removeComments: true,//移除注释
-                removeEmptyAttributes: true,//移除空属性
-                collapseWhitespace: true//移除空格
+                removeAttributeQuotes: true, //移除属性的引号
+                removeComments: true, //移除注释
+                removeEmptyAttributes: true, //移除空属性
+                collapseWhitespace: true //移除空格
             }
         })
     ]
