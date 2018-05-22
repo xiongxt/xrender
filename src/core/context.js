@@ -8,12 +8,16 @@ export default class Context {
         this.canvas.style.height = `${el.clientHeight}px`;
         this.canvas.width = el.clientWidth * 1;
         this.canvas.height = el.clientHeight * 1;
+
         el.appendChild(this.canvas);
     }
 
     setChart (chart) {
+        chart.width = this.canvas.width;
+        chart.height = this.canvas.height;
+        chart.ctx = this.context;
         this.chart = chart;
     }
 
-    renderChart () {}
+    renderChart () { }
 }

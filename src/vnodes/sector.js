@@ -22,7 +22,7 @@ CanvasRenderingContext2D.prototype.sector = function (x, y, radius, sDeg, eDeg) 
     this.rotate(sDeg);
     // 从圆心连接到起点
     this.lineTo(radius, 0);
-    this.stroke();
+    // this.stroke();
     this.closePath();
     // 还原到最初保存的状态
     this.restore();
@@ -54,13 +54,6 @@ export default class Sector extends VNode {
     }
 
     render (context) {
-        if (this.stroke) {
-            context.beginPath();
-            context.lineWidth = this.lineWidth;
-            context.strokeStyle = this.strokeStyle;
-            this._render(context, this.center.x, this.center.y, this.radius, this.sDeg * deg, this.eDeg * deg, false);
-            context.closePath();
-        }
         if (this.fill) {
             context.beginPath();
             this._render(context, this.center.x, this.center.y, this.radius, this.sDeg * deg, this.eDeg * deg, false);
@@ -92,7 +85,9 @@ export default class Sector extends VNode {
         context.rotate(sDeg);
         // 从圆心连接到起点
         context.lineTo(radius, 0);
-        context.stroke();
+        if (this.stroke) {
+            context.stroke();
+        }
         context.closePath();
         // 还原到最初保存的状态
         context.restore();

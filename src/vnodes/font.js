@@ -21,4 +21,9 @@ export default class Font extends VNode {
         context.fillText(this.text, this.start.x, this.start.y);
         context.closePath();
     }
+
+    measureText (text, context) {
+        context.font = `normal ${this.fontSize} Verdana,微软雅黑`;
+        return context.measureText(text);
+    }
 }

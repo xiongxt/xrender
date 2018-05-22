@@ -21,5 +21,8 @@ let colors = [
 ];
 
 export default class Colors {
-    getColor (index = 0) {}
+    static getColor (index = 0) {
+        index = index % colors.length;
+        return colors[index];
+    }
 }
