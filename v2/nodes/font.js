@@ -1,5 +1,5 @@
-import VNode from '../core/vnode';
-export default class Font extends VNode {
+import Node from '../Node';
+export default class Font extends Node {
     constructor (config = {}) {
         super(config);
     }

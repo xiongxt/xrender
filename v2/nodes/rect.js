@@ -1,5 +1,5 @@
-import VNode from '../core/vnode';
-export default class Rect extends VNode {
+import Node from '../Node';
+export default class Rect extends Node {
     constructor (config = {}) {
         super(config);
     }

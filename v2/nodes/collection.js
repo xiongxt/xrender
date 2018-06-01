@@ -1,6 +1,6 @@
-import VNode from '../core/vnode';
+import Node from '../Node';
 import Adapter from '../core/adapter';
-export default class Collection extends VNode {
+export default class Collection extends Node {
     constructor (config = {}) {
         super(config);
         this.children = Adapter.compile(this.children);

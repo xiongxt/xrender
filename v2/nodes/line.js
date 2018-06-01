@@ -1,5 +1,5 @@
-import VNode from '../core/vnode';
-export default class Line extends VNode {
+import Node from '../Node';
+export default class Line extends Node {
     constructor (config = {
 
     }) {
