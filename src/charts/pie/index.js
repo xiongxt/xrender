@@ -28,7 +28,7 @@ export default class Pie extends Chart {
             x: (this.width - 70) / 2,
             y: this.height / 2
         };
-        this.radius = Math.min((this.width - 70), this.height) / 2 * 0.6;
+        this.radius = Math.min((this.width - 70), this.height) / 2 * 0.8;
         this.sectors = [];
         let eDeg = 0;
         let count = 0;

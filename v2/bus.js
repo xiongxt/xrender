@@ -1,0 +1,6 @@
+export default {
+
+    trigger () { },
+
+    on () { }
+};
