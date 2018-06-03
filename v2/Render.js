@@ -1,11 +1,12 @@
 import Node from './Node';
 
 export default class Render {
-    constructor (ctx) {
+    constructor (envoParams) {
+        this.envoParams = envoParams;
         this.root = new Node();
-        this.ctx = ctx;
+        // this.ctx = ctx;
 
-        this._root.ctx = ctx;
+        // this._root.ctx = ctx;
     }
 
     render () {

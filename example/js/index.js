@@ -1,19 +1,3 @@
-import lightChart from '../../src';
+import xrender from '../../v2/xrender';
 
-lightChart.init({
-    el: document.getElementById('chart1'),
-    type: 'pie',
-    data: [{
-        name: '中国',
-        value: 50
-    },
-    {
-        name: '美国',
-        value: 80
-    },
-    {
-        name: '日本',
-        value: 40
-    }
-    ]
-});
+xrender.init('#chart1');
