@@ -1,20 +1,20 @@
 import Node from './Node';
+import mixin from './mixin';
 
 export default class Render {
     constructor (envoParams) {
+        mixin(this, envoParams);
         this.envoParams = envoParams;
         this.root = new Node();
-        // this.ctx = ctx;
-
-        // this._root.ctx = ctx;
+        this.root.setEnvo(envoParams);
     }
 
     render () {
-        let id = window.requestAnimationFrame(() => {
+        window.requestAnimationFrame(() => {
+            console.log('xxxxxxxxx');
             this.root.render();
         });
-
-        window.cancelAnimationFrame(id);
+        // window.cancelAnimationFrame(id);
     }
 
     addElement (node) {

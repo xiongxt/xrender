@@ -1,3 +1,5 @@
 import xrender from '../../v2/xrender';
 
-xrender.init('#chart1');
+let render = xrender.init('#chart1');
+
+render.render();

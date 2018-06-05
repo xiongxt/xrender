@@ -1,4 +1,5 @@
 import bus from './bus';
+import mixin from './mixin';
 
 export default class Node {
     constructor () {
@@ -10,19 +11,34 @@ export default class Node {
 
         this.parent = null;
 
-        bus.on('point/check/click', (x, y) => {
+        bus.on('canvas/mousemove', ({
+            x,
+            y
+        }) => {
             this.needCheck = true;
+            // console.log(`{${x},${y}}`);
         });
     }
 
     render () {
         this.needCheck = false;
     }
-    setAttributes () { }
 
-    getAttribute () { }
+    setEnvo (envoParams) {
+        this.envoParams = envoParams;
+        mixin(this, envoParams);
+        console.log(this);
+    }
 
-    addChild () { }
+    setAttr () {}
 
-    delChild () { }
+    getAttr () {}
+
+    addChild () {}
+
+    delChild () {}
+
+    on () {}
+
+    off () {}
 }

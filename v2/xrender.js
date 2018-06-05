@@ -1,35 +1,45 @@
 import Render from './Render';
-// import bus from './bus';
+import bus from './bus';
+import Circle from './nodes/Circle';
 
 export default {
     init (selector, scale = 1) {
-        this.el = document.querySelector(selector);
-        this.canvas = document.createElement('canvas');
-        this.context = this.canvas.getContext('2d');
+        let el = document.querySelector(selector);
+        let canvas = document.createElement('canvas');
+        let context = canvas.getContext('2d');
 
         const envoParams = {
-            ctx: this.context,
-            width: this.el.clientWidth * scale,
-            height: this.el.clientHeight * scale,
-            scale: scale,
-            originWidth: this.el.clientWidth,
-            originHeight: this.el.clientHeight
+            context: context,
+            canvasWidth: el.clientWidth * scale,
+            canvasHeight: el.clientHeight * scale,
+            canvasScale: scale,
+            canvasPxWidth: el.clientWidth,
+            canvasPxHeight: el.clientHeight
         };
 
-        this.canvas.style.width = `${envoParams.originWidth}px`;
-        this.canvas.style.height = `${envoParams.originHeight}px`;
-        this.canvas.width = envoParams.originWidth * scale;
-        this.canvas.height = envoParams.originHeight * scale;
+        canvas.style.width = `${envoParams.originWidth}px`;
+        canvas.style.height = `${envoParams.originHeight}px`;
+        canvas.width = envoParams.originWidth * scale;
+        canvas.height = envoParams.originHeight * scale;
 
-        this.el.appendChild(this.canvas);
+        el.appendChild(canvas);
 
-        this.render = new Render(envoParams);
+        let render = new Render(envoParams);
 
-        this.el.addEventListener('click', (event) => {
-            console.log(event);
+        el.addEventListener('click', (event) => {
+            bus.trigger('canvas/click', {
+                x: event.offsetX,
+                y: event.offsetY
+            });
         });
-        this.el.addEventListener('mousemove', (event) => {
-            console.log(`${event.offsetX},${event.offsetY}`);
+        el.addEventListener('mousemove', (event) => {
+            bus.trigger('canvas/mousemove', {
+                x: event.offsetX,
+                y: event.offsetY
+            });
         });
-    }
+
+        return render;
+    },
+    Circle
 };
