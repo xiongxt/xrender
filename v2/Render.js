@@ -1,6 +1,5 @@
 import Node from './Node';
 import mixin from './mixin';
-
 export default class Render {
     constructor (envoParams) {
         mixin(this, envoParams);
@@ -10,9 +9,9 @@ export default class Render {
     }
 
     render () {
-        window.requestAnimationFrame(() => {
-            console.log('xxxxxxxxx');
+        requestAnimationFrame(() => {
             this.root.render();
+            this.render();
         });
         // window.cancelAnimationFrame(id);
     }

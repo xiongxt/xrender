@@ -1,0 +1,4 @@
+export default {
+    requestAnimationFrame () {},
+    cancelAnimationFrame () {}
+};

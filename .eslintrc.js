@@ -7,11 +7,9 @@ module.exports = {
     parserOptions: {
         parser: 'babel-eslint'
     },
-    extends: [
-        'standard'
-    ],
+    extends: ['standard'],
     rules: {
-        'semi': ["error", "always", { "omitLastInOneLineBlock": true }],
-        "indent": ["error", 4]
+        semi: ['error', 'always', { omitLastInOneLineBlock: true }],
+        indent: ['error', 4]
     }
 };

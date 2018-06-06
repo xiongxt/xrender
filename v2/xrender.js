@@ -17,26 +17,32 @@ export default {
             canvasPxHeight: el.clientHeight
         };
 
-        canvas.style.width = `${envoParams.originWidth}px`;
-        canvas.style.height = `${envoParams.originHeight}px`;
-        canvas.width = envoParams.originWidth * scale;
-        canvas.height = envoParams.originHeight * scale;
+        canvas.style.width = `${envoParams.canvasPxWidth}px`;
+        canvas.style.height = `${envoParams.canvasPxHeight}px`;
+        canvas.width = envoParams.canvasPxWidth * scale;
+        canvas.height = envoParams.canvasPxHeight * scale;
 
         el.appendChild(canvas);
 
         let render = new Render(envoParams);
 
-        el.addEventListener('click', (event) => {
+        el.addEventListener('click', event => {
             bus.trigger('canvas/click', {
                 x: event.offsetX,
                 y: event.offsetY
             });
         });
-        el.addEventListener('mousemove', (event) => {
+        el.addEventListener('mousemove', event => {
             bus.trigger('canvas/mousemove', {
                 x: event.offsetX,
                 y: event.offsetY
             });
+        });
+        el.addEventListener('mouseleave', event => {
+            bus.trigger('canvas/mouseleave');
+        });
+        el.addEventListener('mouseenter', event => {
+            bus.trigger('canvas/mouseenter');
         });
 
         return render;

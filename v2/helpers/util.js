@@ -1,18 +1,24 @@
-
 export default {
-
-    arrayGroupByAttr (array = [], attr = '') {
+    getArrayGroupByAttr (array = [], attr = '') {
         let res = {};
-        array.forEach((item) => {
-            if (res[item[attr]]) {
-                res[item[attr]].push(item);
+        array.forEach(item => {
+            let val = this.getValueByAttr(item, attr);
+            if (res[val]) {
+                res[val].push(item);
             } else {
-                res[item[attr]] = [item];
+                res[val] = [item];
             }
         });
         return res;
+    },
+
+    getValueByAttr (obj, attr) {
+        let array = attr.split('.');
+        array.forEach(key => {
+            obj = obj[key];
+        });
+        return obj;
     }
 
     // toArra
-
 };
