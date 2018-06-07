@@ -1,13 +1,15 @@
 import Node from '../Node';
 export default class Circle extends Node {
-    renderSelf () {
-        let context = this.context;
+    _renderSelf (context) {
+        if (!context) {
+            context = this.context;
+        }
         context.beginPath();
         if (this.style.stroke) {
             context.arc(
-                this.style.center.x,
-                this.style.center.y,
-                this.style.radius,
+                this.style.center.x * this.canvasScale,
+                this.style.center.y * this.canvasScale,
+                this.style.radius * this.canvasScale,
                 0,
                 360,
                 false
@@ -18,9 +20,9 @@ export default class Circle extends Node {
         }
         if (this.style.fill) {
             context.arc(
-                this.style.center.x,
-                this.style.center.y,
-                this.style.radius,
+                this.style.center.x * this.canvasScale,
+                this.style.center.y * this.canvasScale,
+                this.style.radius * this.canvasScale,
                 0,
                 360,
                 false
@@ -28,9 +30,5 @@ export default class Circle extends Node {
             context.fillStyle = this.style['background-color'];
             context.fill();
         }
-        if (this.needCheck) {
-            this.checkPointInPath();
-        }
-        context.closePath();
     }
 }

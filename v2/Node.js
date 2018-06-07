@@ -1,91 +1,109 @@
-import bus from './bus';
-import mixin from './mixin';
+import bus from './helpers/bus';
+import mixin from './helpers/mixin';
 import style from './helpers/style';
+import Event from './helpers/Event';
 // import util from './helpers/util';
 
-export default class Node {
+export default class Node extends Event {
     constructor (myStyle = {}, myAttrs = {}) {
-        this.events = {
-            click: [],
-            mouseenter: [],
-            mouseleave: []
-        };
+        super();
         this.style = Object.assign({}, style);
-        this.setStype(myStyle);
+        this.setStype(myStyle, false);
         this.children = [];
         this.needCheck = false;
 
         this.parent = null;
         this.isPointInPath = false;
+        this.mouseStatus = [];
+
+        this._checkCursor();
 
         bus.on('canvas/mousemove', ({ x, y }) => {
             this.mouseX = x;
             this.mouseY = y;
-            this.needCheck = true;
+            let inPath = this._checkPointInPath();
+            if (inPath === false) {
+                this.recoredMouseStatus(false);
+                this.fireMouseLeaveEvents();
+            }
+            if (inPath) {
+                return this;
+            }
         });
-        bus.on('canvas/mouseenter', () => {
-            this.needCheck = true;
+        bus.on('canvas/click', ({ x, y }) => {
+            this.mouseX = x;
+            this.mouseY = y;
+            let inPath = this._checkPointInPath();
+            if (inPath) {
+                return this;
+            }
         });
-        bus.on('canvas/mouseleave', () => {
-            this.needCheck = false;
+        bus.on('canvas/mousedown', ({ x, y }) => {
+            this.mouseX = x;
+            this.mouseY = y;
+            let inPath = this._checkPointInPath();
+            if (inPath) {
+                return this;
+            }
         });
     }
 
-    checkPointInPath () {
-        let _isPointInPath = this.context.isPointInPath(
-            this.mouseX,
-            this.mouseY
+    _setMouseLocation (x, y) {
+        this.mouseX = x;
+        this.mouseY = y;
+    }
+    _checkPointInPath () {
+        this._renderSelf(this.context2);
+        let inPath = false;
+        inPath = this.context2.isPointInPath(
+            this.mouseX * this.canvasScale,
+            this.mouseY * this.canvasScale
         );
-        if (
-            this.events['mouseenter'].length &&
-            _isPointInPath === true &&
-            this.isPointInPath === false
-        ) {
-            this.events['mouseenter'].forEach(func => {
-                func(this);
-            });
-        }
-
-        if (
-            this.events['mouseleave'].length &&
-            _isPointInPath === false &&
-            this.isPointInPath === true
-        ) {
-            this.events['mouseleave'].forEach(func => {
-                func(this);
-            });
-        }
-        this.isPointInPath = _isPointInPath;
+        this.context2.closePath();
+        return inPath;
     }
 
-    renderSelf () {}
+    _renderSelf () {}
 
-    renderChildren () {
-        this.children
-            .sort((item1, item2) => {
-                return item1.style['z-index'] > item2.style['z-index'];
-            })
-            .forEach(item => {
-                item.render();
-            });
+    _renderChildren () {
+        let sortArray = this.children.sort((item1, item2) => {
+            return item1.style['z-index'] > item2.style['z-index'];
+        });
+        sortArray.forEach(item => {
+            item.render();
+        });
     }
 
-    render () {
-        // this.needCheck = false;
-        this.renderSelf();
-        this.renderChildren();
-        // this.children.forEach(item => {
-        //     item.render();
-        // });
-    }
-
-    setEnvo (envoParams) {
+    _setEnvo (envoParams) {
         this.envoParams = envoParams;
         mixin(this, envoParams);
     }
 
-    setStype (style) {
+    _checkCursor () {
+        if (this.style['cursor'] !== 'default' && this.usedCursor !== true) {
+            this.usedCursor = true;
+            this.on('mouseenter', () => {
+                this.canvas.style.cursor = this.style.cursor;
+            });
+            this.on('mouseleave', () => {
+                this.canvas.style.cursor = 'default';
+            });
+        }
+    }
+
+    render () {
+        this.renderIndex = this.envoParams.renderIndex + 1;
+        this.envoParams.renderIndex = this.renderIndex;
+        this._renderSelf();
+        this._renderChildren();
+    }
+
+    setStype (style, repaint = true) {
         mixin(this.style, style);
+        this._checkCursor();
+        if (repaint) {
+            bus.trigger('repaint');
+        }
     }
 
     setAttr () {}
@@ -93,7 +111,7 @@ export default class Node {
     getAttr () {}
 
     addChild (node) {
-        node.setEnvo(this.envoParams);
+        node._setEnvo(this.envoParams);
         node.setParent(this);
         this.children.push(node);
     }
@@ -103,31 +121,4 @@ export default class Node {
     setParent (parent) {
         this.parent = parent;
     }
-
-    on (name = '', callback = () => {}) {
-        this.events[name].push(callback);
-    }
-
-    off () {}
-    _checkEvents () {
-        // if (
-        //     this.events['mouseenter'].length &&
-        //     _isPointInPath === true &&
-        //     this.isPointInPath === false
-        // ) {
-        //     this.events['mouseenter'].forEach(func => {
-        //         func(this);
-        //     });
-        // }
-        // if (
-        //     this.events['mouseleave'].length &&
-        //     _isPointInPath === false &&
-        //     this.isPointInPath === true
-        // ) {
-        //     this.events['mouseleave'].forEach(func => {
-        //         func(this);
-        //     });
-        // }
-    }
-    _checkVisibleOnPoint () {}
 }

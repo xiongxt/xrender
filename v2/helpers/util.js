@@ -18,7 +18,17 @@ export default {
             obj = obj[key];
         });
         return obj;
-    }
+    },
 
-    // toArra
+    getTopNode (nodes) {
+        let max = 0;
+        let finalNode = null;
+        nodes.forEach(node => {
+            if (node.renderIndex > max) {
+                finalNode = node;
+                max = node.renderIndex;
+            }
+        });
+        return finalNode;
+    }
 };

@@ -5,6 +5,7 @@ export default {
     'background-image': 'none',
     'font-size': '12px',
     'font-family': '',
+    cursor: 'default',
     color: '#333',
     stroke: true,
     fill: false,
