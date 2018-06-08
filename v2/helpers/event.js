@@ -4,7 +4,9 @@ export default class Event {
             click: [],
             mouseenter: [],
             mouseleave: [],
-            mousedown: []
+            mousedown: [],
+            mouseup: [],
+            mousemove: []
         };
     }
 
@@ -35,10 +37,10 @@ export default class Event {
         }
     }
 
-    fireEvent (name) {
+    fireEvent (name, data = {}) {
         if (this.getEventCallbacks(name).length) {
             this.events[name].forEach(func => {
-                func(this);
+                func(this, data);
             });
         }
     }

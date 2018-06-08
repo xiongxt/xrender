@@ -16,11 +16,12 @@ export default class Node extends Event {
         this.isPointInPath = false;
         this.mouseStatus = [];
 
+        this.offsetChangeAble = true;
+
         this._checkCursor();
 
         bus.on('canvas/mousemove', ({ x, y }) => {
-            this.mouseX = x;
-            this.mouseY = y;
+            this._setMouseLocation(x, y);
             let inPath = this._checkPointInPath();
             if (inPath === false) {
                 this.recoredMouseStatus(false);
@@ -31,16 +32,14 @@ export default class Node extends Event {
             }
         });
         bus.on('canvas/click', ({ x, y }) => {
-            this.mouseX = x;
-            this.mouseY = y;
+            this._setMouseLocation(x, y);
             let inPath = this._checkPointInPath();
             if (inPath) {
                 return this;
             }
         });
         bus.on('canvas/mousedown', ({ x, y }) => {
-            this.mouseX = x;
-            this.mouseY = y;
+            this._setMouseLocation(x, y);
             let inPath = this._checkPointInPath();
             if (inPath) {
                 return this;
@@ -51,7 +50,11 @@ export default class Node extends Event {
     _setMouseLocation (x, y) {
         this.mouseX = x;
         this.mouseY = y;
+        this._setOffsetPosition();
     }
+
+    _setOffsetPosition () {}
+
     _checkPointInPath () {
         this._renderSelf(this.context2);
         let inPath = false;
@@ -96,6 +99,14 @@ export default class Node extends Event {
         this.envoParams.renderIndex = this.renderIndex;
         this._renderSelf();
         this._renderChildren();
+    }
+
+    lockOffset () {
+        this.offsetChangeAble = false;
+    }
+
+    unlockOffset () {
+        this.offsetChangeAble = true;
     }
 
     setStype (style, repaint = true) {

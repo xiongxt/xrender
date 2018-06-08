@@ -42,15 +42,48 @@ circle.on('click', () => {
         'background-color': 'black'
     });
 });
+let dragging = false;
 circle.on('mousedown', () => {
     console.log('mousedown');
-    console.log(circle.mouseX);
+    console.log(circle.offsetX);
+    dragging = true;
+    circle.lockOffset();
     circle.setStype({
+        'z-index': 6,
         'background-color': 'black'
     });
 });
-circle.on('mousemove', () => {
-    console.log('mousemove');
+
+render.onMouseMove(() => {
+    if (dragging) {
+        console.log(
+            `
+            center:x:${circle.style.center.x},${circle.style.center.y}
+            mouse:x:${circle.mouseX},${circle.mouseY}
+            offset:x:${circle.offsetX},${circle.offsetY}
+            `
+        );
+        circle.setStype({
+            'z-index': 6,
+            center: {
+                x:
+                    circle.style.center.x +
+                    (circle.mouseX -
+                        circle.offsetX -
+                        (circle.style.center.x - circle.style.radius)),
+                y:
+                    circle.style.center.y +
+                    (circle.mouseY -
+                        circle.offsetY -
+                        (circle.style.center.y - circle.style.radius))
+            }
+        });
+    }
+});
+
+render.onMouseLeave(() => {
+    dragging = false;
+    circle.unlockOffset();
 });
 
 render.addElement(circle);

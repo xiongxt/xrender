@@ -55,6 +55,9 @@ export default {
                 y: event.offsetY
             });
         });
+        el.addEventListener('mouseup', event => {
+            bus.trigger('canvas/mouseup');
+        });
         el.addEventListener('mousedown', event => {
             bus.trigger('canvas/mousedown', {
                 x: event.offsetX,
@@ -73,7 +76,6 @@ export default {
         el.addEventListener('mouseenter', event => {
             bus.trigger('canvas/mouseenter');
         });
-
         return render;
     },
     Circle

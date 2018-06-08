@@ -16,7 +16,6 @@ export default {
                 });
                 let node = util.getTopNode(nodes);
                 node && node.fireMouseMoveEvents();
-                console.log(nodes);
                 nodes.forEach(_node => {
                     if (_node !== node) {
                         _node.fireMoveNotInPath();

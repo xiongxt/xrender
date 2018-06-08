@@ -31,4 +31,13 @@ export default class Circle extends Node {
             context.fill();
         }
     }
+
+    _setOffsetPosition () {
+        if (this.offsetChangeAble) {
+            this.offsetX =
+                this.mouseX - (this.style.center.x - this.style.radius);
+            this.offsetY =
+                this.mouseY - (this.style.center.y - this.style.radius);
+        }
+    }
 }
