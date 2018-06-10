@@ -1,29 +1,32 @@
 import Node from './Node';
-import mixin from './helpers/mixin';
+import util from './helpers/util';
 import bus from './helpers/bus';
-import Event from './helpers/Event';
+import Event from './event/Event';
+import draggable from './event/draggable';
 export default class Render extends Event {
     constructor (envoParams) {
         super();
-        mixin(this, envoParams);
+        util.mixin(this, envoParams);
         this.envoParams = envoParams;
+        this.envoParams.renderObj = this;
         this.root = new Node();
         this.root._setEnvo(envoParams);
+        draggable.setRender(this);
         bus.on('repaint', () => {
             this.render();
         });
 
-        this.onMouseMoveFunc = () => {};
-        this.onMouseLeaveFunc = () => {};
-
-        bus.on('canvas/mousemove', ({ x, y }) => {
+        bus.on('canvas/mousemove', ({
+            x,
+            y
+        }) => {
             this.fireEvent('mousemove');
         });
         bus.on('canvas/mouseleave', event => {
-            this.onMouseLeaveFunc();
+            this.fireEvent('mouseleave');
         });
         bus.on('canvas/mouseup', event => {
-            this.onMouseLeaveFunc();
+            this.fireEvent('mouseup');
         });
     }
 
@@ -46,13 +49,5 @@ export default class Render extends Event {
 
     delElement (node) {
         this.root.delChild(node);
-    }
-
-    onMouseMove (func) {
-        this.onMouseMoveFunc = func;
-    }
-
-    onMouseLeave (func) {
-        this.onMouseLeaveFunc = func;
     }
 }

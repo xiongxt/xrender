@@ -1,4 +1,17 @@
+let timer = new Date().getTime();
+
 export default {
+
+    mixin (source = {}, target = {}) {
+        Object.keys(target).forEach(key => {
+            source[key] = target[key];
+        });
+    },
+
+    guid () {
+        return timer++;
+    },
+
     getArrayGroupByAttr (array = [], attr = '') {
         let res = {};
         array.forEach(item => {

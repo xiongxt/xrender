@@ -11,7 +11,7 @@ let circle = new xrender.Circle({
     fill: true,
     stroke: false,
     'z-index': 3,
-    cursor: 'move',
+    cursor: 'pointer',
     'background-color': 'blue'
 });
 
@@ -38,52 +38,17 @@ circle.on('mouseleave', () => {
     });
 });
 circle.on('click', () => {
-    circle.setStype({
-        'background-color': 'black'
+    console.log('circle1 click');
+});
+circle2.on('click', () => {
+    console.log('circle2 click');
+    circle2.animate({
+        radius: 50,
+        center: {
+            x: 200,
+            y: 200
+        }
     });
-});
-let dragging = false;
-circle.on('mousedown', () => {
-    console.log('mousedown');
-    console.log(circle.offsetX);
-    dragging = true;
-    circle.lockOffset();
-    circle.setStype({
-        'z-index': 6,
-        'background-color': 'black'
-    });
-});
-
-render.onMouseMove(() => {
-    if (dragging) {
-        console.log(
-            `
-            center:x:${circle.style.center.x},${circle.style.center.y}
-            mouse:x:${circle.mouseX},${circle.mouseY}
-            offset:x:${circle.offsetX},${circle.offsetY}
-            `
-        );
-        circle.setStype({
-            'z-index': 6,
-            center: {
-                x:
-                    circle.style.center.x +
-                    (circle.mouseX -
-                        circle.offsetX -
-                        (circle.style.center.x - circle.style.radius)),
-                y:
-                    circle.style.center.y +
-                    (circle.mouseY -
-                        circle.offsetY -
-                        (circle.style.center.y - circle.style.radius))
-            }
-        });
-    }
-});
-
-render.onMouseLeave(() => {
-    dragging = false;
-    circle.unlockOffset();
 });
 
 render.addElement(circle);

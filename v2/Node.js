@@ -1,17 +1,21 @@
 import bus from './helpers/bus';
-import mixin from './helpers/mixin';
 import style from './helpers/style';
-import Event from './helpers/Event';
-// import util from './helpers/util';
-
+import attribute from './helpers/attribute';
+import Event from './event/Event';
+import util from './helpers/util';
+import draggable from './event/draggable';
+import animation from './helpers/animation';
 export default class Node extends Event {
     constructor (myStyle = {}, myAttrs = {}) {
         super();
+        this.id = util.guid();
         this.style = Object.assign({}, style);
+        this.attr = Object.assign({}, attribute);
         this.setStype(myStyle, false);
+        this.setAttr(myAttrs, false);
+        util.mixin(this, animation);
         this.children = [];
         this.needCheck = false;
-
         this.parent = null;
         this.isPointInPath = false;
         this.mouseStatus = [];
@@ -20,7 +24,10 @@ export default class Node extends Event {
 
         this._checkCursor();
 
-        bus.on('canvas/mousemove', ({ x, y }) => {
+        bus.on('canvas/mousemove', ({
+            x,
+            y
+        }) => {
             this._setMouseLocation(x, y);
             let inPath = this._checkPointInPath();
             if (inPath === false) {
@@ -31,14 +38,20 @@ export default class Node extends Event {
                 return this;
             }
         });
-        bus.on('canvas/click', ({ x, y }) => {
+        bus.on('canvas/click', ({
+            x,
+            y
+        }) => {
             this._setMouseLocation(x, y);
             let inPath = this._checkPointInPath();
             if (inPath) {
                 return this;
             }
         });
-        bus.on('canvas/mousedown', ({ x, y }) => {
+        bus.on('canvas/mousedown', ({
+            x,
+            y
+        }) => {
             this._setMouseLocation(x, y);
             let inPath = this._checkPointInPath();
             if (inPath) {
@@ -79,7 +92,7 @@ export default class Node extends Event {
 
     _setEnvo (envoParams) {
         this.envoParams = envoParams;
-        mixin(this, envoParams);
+        util.mixin(this, envoParams);
     }
 
     _checkCursor () {
@@ -110,16 +123,22 @@ export default class Node extends Event {
     }
 
     setStype (style, repaint = true) {
-        mixin(this.style, style);
+        util.mixin(this.style, style);
         this._checkCursor();
         if (repaint) {
             bus.trigger('repaint');
         }
     }
 
-    setAttr () {}
-
-    getAttr () {}
+    setAttr (attr, repaint = false) {
+        util.mixin(this.attr, attr);
+        if (this.attr.draggable) {
+            draggable.init(this);
+        }
+        if (repaint) {
+            bus.trigger('repaint');
+        }
+    }
 
     addChild (node) {
         node._setEnvo(this.envoParams);

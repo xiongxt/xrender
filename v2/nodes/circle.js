@@ -32,6 +32,9 @@ export default class Circle extends Node {
         }
     }
 
+    /**
+     * 记录鼠标位置相对于当前图形的坐标
+     */
     _setOffsetPosition () {
         if (this.offsetChangeAble) {
             this.offsetX =
@@ -39,5 +42,23 @@ export default class Circle extends Node {
             this.offsetY =
                 this.mouseY - (this.style.center.y - this.style.radius);
         }
+    }
+
+    /**
+     * 拖拽时，重新设置图形的位置信息
+     */
+    _setDraggingPos () {
+        this.setStype({
+            center: {
+                x: this.style.center.x +
+                    (this.mouseX -
+                        this.offsetX -
+                        (this.style.center.x - this.style.radius)),
+                y: this.style.center.y +
+                    (this.mouseY -
+                        this.offsetY -
+                        (this.style.center.y - this.style.radius))
+            }
+        });
     }
 }
