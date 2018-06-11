@@ -11,6 +11,6 @@ module.exports = {
     rules: {
         semi: ['error', 'always', { omitLastInOneLineBlock: true }],
         indent: ['error', 4],
-        'no-debugger': 2
+        'no-debugger': 0
     }
 };

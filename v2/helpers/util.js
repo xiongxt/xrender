@@ -1,7 +1,6 @@
 let timer = new Date().getTime();
 
 export default {
-
     mixin (source = {}, target = {}) {
         Object.keys(target).forEach(key => {
             source[key] = target[key];
@@ -31,6 +30,23 @@ export default {
             obj = obj[key];
         });
         return obj;
+    },
+
+    setValueByAttr (obj, attr, val) {
+        let array = attr.split('.');
+        if (array.length === 1) {
+            obj[attr] = val;
+        } else {
+            let last = array.splice(-1)[0];
+            let _obj = obj;
+            array.forEach(key => {
+                if (!obj[key]) {
+                    obj[key] = {};
+                }
+                _obj = obj[key];
+            });
+            _obj[last] = val;
+        }
     },
 
     getTopNode (nodes) {

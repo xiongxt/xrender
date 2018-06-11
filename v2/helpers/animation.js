@@ -32,19 +32,29 @@ function getAnimateOptions (node, keyUrls, time) {
             animateOptions.changlist[keyUrl] = {
                 old: oldValue,
                 cur: oldValue,
-                dest: destValue,
-                status: 'doing'
+                dest: destValue
             };
         }
     });
     return animateOptions;
 }
 
+let easying = {
+    linear (rate) {
+        return rate;
+    },
+    swing (rate) {
+        return -Math.cos(rate * Math.PI) / 2 + 0.5;
+    }
+};
+
 export default {
     animate (dest, time = 1000) {
         let keyUrls = {};
+        // 扁平化数据
         getObjectKeys(dest, keyUrls);
         this.animateOptions = getAnimateOptions(this, keyUrls, time);
+        this.animateOptions.dest = dest;
         this._startAnimate();
     },
     _checkAllDone () {},
@@ -52,8 +62,27 @@ export default {
         requestAnimationFrame(() => {
             let curTime = new Date().getTime();
             let animateOptions = this.animateOptions;
-            let rate = (curTime - animateOptions.now) / animateOptions.allTime;
-            // animateOptions.changlist.forEach(key)
+            if (curTime - animateOptions.start >= animateOptions.allTime) {
+                this.setStype(animateOptions.dest);
+            } else {
+                let rate =
+                    (curTime - animateOptions.start) / animateOptions.allTime;
+                rate = easying.swing(rate);
+                console.log(rate);
+                if (rate !== 0) {
+                    let dest = {};
+                    let changlist = animateOptions.changlist;
+                    Object.keys(changlist).forEach(keyUrl => {
+                        let data = changlist[keyUrl];
+                        let val = (data.dest - data.old) * rate + data.old;
+                        util.setValueByAttr(dest, keyUrl, val);
+                        changlist[keyUrl].cur = val;
+                    });
+                    console.log(dest);
+                    this.setStype(dest);
+                }
+                this._startAnimate();
+            }
         });
     }
 };
