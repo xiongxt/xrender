@@ -1,3 +1,4 @@
+import color from './color';
 let timer = new Date().getTime();
 
 export default {
@@ -22,6 +23,26 @@ export default {
             }
         });
         return res;
+    },
+
+    getObjectKeys (obj, startStr = '', keyUrls = {}) {
+        Object.keys(obj).forEach(key => {
+            if (typeof obj[key] === 'object') {
+                this.getObjectKeys(obj[key], key, keyUrls);
+            } else if (typeof obj[key] === 'number') {
+                if (startStr) {
+                    keyUrls[`${startStr}.${key}`] = obj[key];
+                } else {
+                    keyUrls[key] = obj[key];
+                }
+            } else if (
+                typeof obj[key] === 'string' &&
+                color.checkColor(obj[key]).isColor
+            ) {
+                keyUrls[key] = obj[key];
+            }
+        });
+        return keyUrls;
     },
 
     getValueByAttr (obj, attr) {

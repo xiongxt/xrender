@@ -12,7 +12,7 @@ let circle = new xrender.Circle({
     stroke: false,
     'z-index': 3,
     cursor: 'pointer',
-    'background-color': 'blue'
+    'background-color': 'rgba(255,0,0,1)'
 });
 
 let circle2 = new xrender.Circle({
@@ -58,7 +58,8 @@ circle2.on('click', () => {
             center: {
                 x: 350,
                 y: 250
-            }
+            },
+            'background-color': 'INDIGO'
         },
         800
     );

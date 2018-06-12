@@ -24,10 +24,7 @@ export default class Node extends Event {
 
         this._checkCursor();
 
-        bus.on('canvas/mousemove', ({
-            x,
-            y
-        }) => {
+        bus.on('canvas/mousemove', ({ x, y }) => {
             this._setMouseLocation(x, y);
             let inPath = this._checkPointInPath();
             if (inPath === false) {
@@ -38,20 +35,14 @@ export default class Node extends Event {
                 return this;
             }
         });
-        bus.on('canvas/click', ({
-            x,
-            y
-        }) => {
+        bus.on('canvas/click', ({ x, y }) => {
             this._setMouseLocation(x, y);
             let inPath = this._checkPointInPath();
             if (inPath) {
                 return this;
             }
         });
-        bus.on('canvas/mousedown', ({
-            x,
-            y
-        }) => {
+        bus.on('canvas/mousedown', ({ x, y }) => {
             this._setMouseLocation(x, y);
             let inPath = this._checkPointInPath();
             if (inPath) {

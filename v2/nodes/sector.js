@@ -56,7 +56,15 @@ export default class Sector extends Node {
     render (context) {
         if (this.fill) {
             context.beginPath();
-            this._render(context, this.center.x, this.center.y, this.radius, this.sDeg * deg, this.eDeg * deg, false);
+            this._render(
+                context,
+                this.center.x,
+                this.center.y,
+                this.radius,
+                this.sDeg * deg,
+                this.eDeg * deg,
+                false
+            );
             context.fillStyle = this.fillStyle;
             context.fill();
             context.closePath();
