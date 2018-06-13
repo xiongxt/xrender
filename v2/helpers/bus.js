@@ -62,5 +62,6 @@ export default {
         } else {
             events[name] = [func];
         }
+        return this;
     }
 };

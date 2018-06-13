@@ -5,6 +5,7 @@ function mousedown (node) {
         draggingNode = node;
         draggingNode.dragging = true;
         draggingNode.lockOffset();
+        draggingNode.fireEvent('startDrag');
     }
 }
 
@@ -12,6 +13,7 @@ function cancelDrag () {
     if (draggingNode && draggingNode.dragging) {
         draggingNode.dragging = false;
         draggingNode.unlockOffset();
+        draggingNode.fireEvent('stopDrag');
     }
 }
 
@@ -19,6 +21,7 @@ function initRenderEvents (render) {
     render.on('mousemove', () => {
         if (draggingNode && draggingNode.dragging) {
             draggingNode._setDraggingPos();
+            draggingNode.fireEvent('duringDrag');
         }
     });
 

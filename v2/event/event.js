@@ -1,13 +1,6 @@
 export default class Event {
     constructor () {
-        this.events = {
-            click: [],
-            mouseenter: [],
-            mouseleave: [],
-            mousedown: [],
-            mouseup: [],
-            mousemove: []
-        };
+        this.events = {};
     }
 
     on (name = '', callback = () => {}) {

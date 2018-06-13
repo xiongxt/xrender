@@ -50,11 +50,13 @@ export default class Circle extends Node {
     _setDraggingPos () {
         this.setStype({
             center: {
-                x: this.style.center.x +
+                x:
+                    this.style.center.x +
                     (this.mouseX -
                         this.offsetX -
                         (this.style.center.x - this.style.radius)),
-                y: this.style.center.y +
+                y:
+                    this.style.center.y +
                     (this.mouseY -
                         this.offsetY -
                         (this.style.center.y - this.style.radius))

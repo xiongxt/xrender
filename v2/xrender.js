@@ -2,6 +2,9 @@ import 'babel-polyfill';
 import Render from './Render';
 import bus from './helpers/bus';
 import Circle from './nodes/Circle';
+import Rect from './nodes/Rect';
+import Sector from './nodes/Sector';
+import Line from './nodes/Line';
 
 function _setCanvasStyle (canvas, envoParams) {
     canvas.style.width = `${envoParams.canvasPxWidth}px`;
@@ -78,5 +81,8 @@ export default {
         });
         return render;
     },
-    Circle
+    Circle,
+    Rect,
+    Sector,
+    Line
 };

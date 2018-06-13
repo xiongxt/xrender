@@ -71,7 +71,6 @@ export default {
                             } else {
                                 val = (data.dest - data.old) * rate + data.old;
                             }
-
                             util.setValueByAttr(dest, keyUrl, val);
                         });
                         this.setStype(dest);

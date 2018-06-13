@@ -12,22 +12,19 @@ export default class Render extends Event {
         this.root = new Node();
         this.root._setEnvo(envoParams);
         draggable.setRender(this);
-        bus.on('repaint', () => {
-            this.render();
-        });
-
-        bus.on('canvas/mousemove', ({
-            x,
-            y
-        }) => {
-            this.fireEvent('mousemove');
-        });
-        bus.on('canvas/mouseleave', event => {
-            this.fireEvent('mouseleave');
-        });
-        bus.on('canvas/mouseup', event => {
-            this.fireEvent('mouseup');
-        });
+        bus
+            .on('repaint', () => {
+                this.render();
+            })
+            .on('canvas/mousemove', ({ x, y }) => {
+                this.fireEvent('mousemove');
+            })
+            .on('canvas/mouseleave', event => {
+                this.fireEvent('mouseleave');
+            })
+            .on('canvas/mouseup', event => {
+                this.fireEvent('mouseup');
+            });
     }
 
     render () {

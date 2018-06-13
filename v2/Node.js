@@ -24,31 +24,38 @@ export default class Node extends Event {
 
         this._checkCursor();
 
-        bus.on('canvas/mousemove', ({ x, y }) => {
-            this._setMouseLocation(x, y);
-            let inPath = this._checkPointInPath();
-            if (inPath === false) {
-                this.recoredMouseStatus(false);
-                this.fireMouseLeaveEvents();
-            }
-            if (inPath) {
-                return this;
-            }
-        });
-        bus.on('canvas/click', ({ x, y }) => {
-            this._setMouseLocation(x, y);
-            let inPath = this._checkPointInPath();
-            if (inPath) {
-                return this;
-            }
-        });
-        bus.on('canvas/mousedown', ({ x, y }) => {
-            this._setMouseLocation(x, y);
-            let inPath = this._checkPointInPath();
-            if (inPath) {
-                return this;
-            }
-        });
+        bus
+            .on('canvas/mousemove', ({ x, y }) => {
+                if (this.attr.ignore !== true) {
+                    this._setMouseLocation(x, y);
+                    let inPath = this._checkPointInPath();
+                    if (inPath === false) {
+                        this.recoredMouseStatus(false);
+                        this.fireMouseLeaveEvents();
+                    }
+                    if (inPath) {
+                        return this;
+                    }
+                }
+            })
+            .on('canvas/click', ({ x, y }) => {
+                if (this.attr.ignore !== true) {
+                    this._setMouseLocation(x, y);
+                    let inPath = this._checkPointInPath();
+                    if (inPath) {
+                        return this;
+                    }
+                }
+            })
+            .on('canvas/mousedown', ({ x, y }) => {
+                if (this.attr.ignore !== true) {
+                    this._setMouseLocation(x, y);
+                    let inPath = this._checkPointInPath();
+                    if (inPath) {
+                        return this;
+                    }
+                }
+            });
     }
 
     _setMouseLocation (x, y) {
@@ -99,10 +106,12 @@ export default class Node extends Event {
     }
 
     render () {
-        this.renderIndex = this.envoParams.renderIndex + 1;
-        this.envoParams.renderIndex = this.renderIndex;
-        this._renderSelf();
-        this._renderChildren();
+        if (this.attr.ignore !== true) {
+            this.renderIndex = this.envoParams.renderIndex + 1;
+            this.envoParams.renderIndex = this.renderIndex;
+            this._renderSelf();
+            this._renderChildren();
+        }
     }
 
     lockOffset () {
