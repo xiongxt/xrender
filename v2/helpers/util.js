@@ -80,5 +80,20 @@ export default {
             }
         });
         return finalNode;
+    },
+
+    isHans (str) {
+        return /^[\u3220-\uFA29]+$/.test(str);
+    },
+
+    clone (obj) {
+        if (typeof obj !== 'object') {
+            return obj;
+        }
+        var newobj = {};
+        for (var attr in obj) {
+            newobj[attr] = this.clone(obj[attr]);
+        }
+        return newobj;
     }
 };

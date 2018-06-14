@@ -29,26 +29,4 @@ export default class Rect extends Node {
             context.fill();
         }
     }
-
-    /**
-     * 记录鼠标位置相对于当前图形的坐标
-     */
-    _setOffsetPosition () {
-        if (this.offsetChangeAble) {
-            this.offsetX = this.mouseX - this.style.start.x;
-            this.offsetY = this.mouseY - this.style.start.y;
-        }
-    }
-
-    /**
-     * 拖拽时，重新设置图形的位置信息
-     */
-    _setDraggingPos () {
-        this.setStype({
-            start: {
-                x: this.mouseX - this.offsetX,
-                y: this.mouseY - this.offsetY
-            }
-        });
-    }
 }

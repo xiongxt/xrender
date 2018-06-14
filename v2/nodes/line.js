@@ -23,12 +23,27 @@ export default class Line extends Node {
         let rate1 =
             (this.style.end.y - this.style.start.y) /
             (this.style.end.x - this.style.start.x);
+        let mx;
 
-        let mx =
-            (this.mouseY - this.style.start.y) / rate1 + this.style.start.x;
+        if (rate1 === 0) {
+            mx = this.style.end.y;
+        } else {
+            mx =
+                (this.mouseY - this.style.start.y) / rate1 + this.style.start.x;
+        }
 
-        // console.log(Math.abs(mx - this.mouseX) < 2);
-        return Math.abs(mx - this.mouseX) < 1;
+        if (
+            this.mouseX <= Math.max(this.style.start.x, this.style.end.x) &&
+            this.mouseX >= Math.min(this.style.start.x, this.style.end.x)
+        ) {
+            if (rate1 === 0) {
+                return Math.abs(this.mouseY - this.style.end.y) < 1;
+            } else {
+                return Math.abs(mx - this.mouseX) < 1;
+            }
+        } else {
+            return false;
+        }
     }
 
     /**

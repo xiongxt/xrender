@@ -26,7 +26,7 @@ export default class Node extends Event {
 
         bus
             .on('canvas/mousemove', ({ x, y }) => {
-                if (this.attr.ignore !== true) {
+                if (this.attr.ignore !== true && this.context) {
                     this._setMouseLocation(x, y);
                     let inPath = this._checkPointInPath();
                     if (inPath === false) {
@@ -39,7 +39,7 @@ export default class Node extends Event {
                 }
             })
             .on('canvas/click', ({ x, y }) => {
-                if (this.attr.ignore !== true) {
+                if (this.attr.ignore !== true && this.context) {
                     this._setMouseLocation(x, y);
                     let inPath = this._checkPointInPath();
                     if (inPath) {
@@ -48,7 +48,7 @@ export default class Node extends Event {
                 }
             })
             .on('canvas/mousedown', ({ x, y }) => {
-                if (this.attr.ignore !== true) {
+                if (this.attr.ignore !== true && this.context) {
                     this._setMouseLocation(x, y);
                     let inPath = this._checkPointInPath();
                     if (inPath) {
@@ -64,7 +64,27 @@ export default class Node extends Event {
         this._setOffsetPosition();
     }
 
-    _setOffsetPosition () {}
+    /**
+     * 记录鼠标位置相对于当前图形的坐标
+     */
+    _setOffsetPosition () {
+        if (this.offsetChangeAble) {
+            this.offsetX = this.mouseX - this.style.start.x;
+            this.offsetY = this.mouseY - this.style.start.y;
+        }
+    }
+
+    /**
+     * 拖拽时，重新设置图形的位置信息
+     */
+    _setDraggingPos () {
+        this.setStype({
+            start: {
+                x: this.mouseX - this.offsetX,
+                y: this.mouseY - this.offsetY
+            }
+        });
+    }
 
     _checkPointInPath () {
         this._renderSelf(this.context2);
@@ -106,7 +126,7 @@ export default class Node extends Event {
     }
 
     render () {
-        if (this.attr.ignore !== true) {
+        if (this.attr.ignore !== true && this.context) {
             this.renderIndex = this.envoParams.renderIndex + 1;
             this.envoParams.renderIndex = this.renderIndex;
             this._renderSelf();
@@ -124,6 +144,7 @@ export default class Node extends Event {
 
     setStype (style, repaint = true) {
         util.mixin(this.style, style);
+        this.originStyle = util.clone(this.style);
         this._checkCursor();
         if (repaint) {
             bus.trigger('repaint');

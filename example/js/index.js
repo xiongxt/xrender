@@ -15,9 +15,7 @@ let circle = new xrender.Circle(
         cursor: 'pointer',
         'background-color': 'rgba(255,0,0,1)'
     },
-    {
-        ignore: true
-    }
+    {}
 );
 
 circle.on('mouseenter', () => {
@@ -93,30 +91,64 @@ let sector = new xrender.Sector({
 
 let line = new xrender.Line({
     start: {
+        x: 232,
+        y: 20
+    },
+    end: {
+        x: 232,
+        y: 200
+    },
+    'border-color': 'blue'
+});
+
+let font = new xrender.Font({
+    start: {
         x: 0,
         y: 0
     },
-    end: {
-        x: 400,
-        y: 400
-    }
+    'font-size': 20,
+    'font-text': 'abci我g打\n你一次可以放弃',
+    'max-width': 'auto',
+    color: 'pink'
 });
-line.on('mouseenter', () => {
-    line.setStype({
-        'border-color': 'blue'
+font.on('mouseenter', () => {
+    font.setStype({
+        color: 'blue'
     });
 });
-line.on('mouseleave', () => {
-    line.setStype({
-        'border-color': 'yellow'
+font.on('mouseleave', () => {
+    font.setStype({
+        color: 'yellow'
     });
 });
 
-render.addElement(circle);
+let img = new xrender.Image({
+    start: {
+        x: 0,
+        y: 300
+    }
+});
+
+let collection = new xrender.Collection({
+    start: {
+        x: 200,
+        y: 200
+    },
+    width: 400,
+    height: 400
+});
+
+//
 render.addElement(circle2);
-render.addElement(rect);
-render.addElement(sector);
-render.addElement(line);
+// render.addElement(circle);
+// render.addElement(rect);
+render.addElement(collection);
+collection.addChild(circle);
+collection.addChild(sector);
+collection.addChild(line);
+collection.addChild(font);
+collection.addChild(rect);
+render.addElement(img);
 render.render();
 console.log(render);
 window.render = render;
