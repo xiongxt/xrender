@@ -1,4 +1,4 @@
-import xrender from '../../v2/xrender';
+import xrender from '../../src/xrender';
 
 let render = xrender.init('#chart1', window.devicePixelRatio * 2);
 
