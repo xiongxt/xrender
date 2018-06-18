@@ -2,13 +2,13 @@
     "name": "xrender",
     "version": "1.0.0",
     "description": "",
-    "main": "src/xrender.js",
+    "main": "dist/main.js",
     "scripts": {
         "test": "echo \"Error: no test specified\" && exit 1",
         "dev": "webpack-dev-server --inline --hot --mode development --config build/webpack.config.doc.js",
         "build": "npm run build:doc && npm run build:source",
         "build:doc": "webpack --mode production --config build/webpack.config.doc.js",
-        "build:source": "webpack --mode development --config build/webpack.config.source.js"
+        "build:source": "webpack --mode production --config build/webpack.config.source.js"
     },
     "repository": {
         "type": "git",

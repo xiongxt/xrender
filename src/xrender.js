@@ -1,4 +1,3 @@
-import 'babel-polyfill';
 import Render from './Render';
 import bus from './helpers/bus';
 import Circle from './nodes/circle';
@@ -9,7 +8,7 @@ import Font from './nodes/font';
 import Image from './nodes/image';
 import Collection from './nodes/collection';
 
-function _setCanvasStyle (canvas, envoParams) {
+function _setCanvasStyle(canvas, envoParams) {
     canvas.style.width = `${envoParams.canvasPxWidth}px`;
     canvas.style.height = `${envoParams.canvasPxHeight}px`;
     canvas.width = envoParams.canvasPxWidth * envoParams.canvasScale;
@@ -21,7 +20,7 @@ function _setCanvasStyle (canvas, envoParams) {
 }
 
 export default {
-    init (selector) {
+    init(selector) {
         let scale = window.devicePixelRatio * 2;
         let el = document.querySelector(selector);
         let canvas = document.createElement('canvas');

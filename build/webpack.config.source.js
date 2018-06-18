@@ -7,31 +7,30 @@ const config = {
     entry: './src/xrender.js',
     output: {
         filename: '[name].js',
-        path: path.resolve(ROOT_PATH, 'dist')
+        path: path.resolve(ROOT_PATH, 'dist'),
+        library: 'xrender',
+        libraryTarget: 'umd',
     },
     module: {
-        rules: [
-            {
+        rules: [{
                 test: /\.js?$/,
                 exclude: /node_modules/,
-                use: [
-                    {
-                        loader: 'babel-loader',
-                        options: {
-                            presets: [['env']]
-                        }
+                use: [{
+                    loader: 'babel-loader',
+                    options: {
+                        presets: [
+                            ['env']
+                        ]
                     }
-                ]
+                }]
             },
             {
                 test: /\.js?$/,
                 enforce: 'pre',
                 exclude: /node_modules/,
-                use: [
-                    {
-                        loader: 'eslint-loader'
-                    }
-                ]
+                use: [{
+                    loader: 'eslint-loader'
+                }]
             }
         ]
     }

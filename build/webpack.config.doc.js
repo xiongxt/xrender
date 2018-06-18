@@ -6,7 +6,7 @@ var ROOT_PATH = path.resolve(__dirname, '../');
 const config = {
     entry: './doc/js/index.js',
     output: {
-        filename: 'js/[name].[hash].js',
+        filename: 'js/[name].js',
         path: path.resolve(ROOT_PATH, 'doc-dist')
         // publicPath: "/dist/"
     },
@@ -17,28 +17,25 @@ const config = {
         hot: true // 便是模块热替换
     },
     module: {
-        rules: [
-            {
+        rules: [{
                 test: /\.js?$/,
                 exclude: /node_modules/,
-                use: [
-                    {
-                        loader: 'babel-loader',
-                        options: {
-                            presets: [['env']]
-                        }
+                use: [{
+                    loader: 'babel-loader',
+                    options: {
+                        presets: [
+                            ['env']
+                        ]
                     }
-                ]
+                }]
             },
             {
                 test: /\.js?$/,
                 enforce: 'pre',
                 exclude: /node_modules/,
-                use: [
-                    {
-                        loader: 'eslint-loader'
-                    }
-                ]
+                use: [{
+                    loader: 'eslint-loader'
+                }]
             }
         ]
     },
