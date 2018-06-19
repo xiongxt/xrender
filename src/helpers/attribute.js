@@ -1,5 +1,5 @@
 export default {
-    draggable: true,
+    draggable: false,
     resizable: false,
     ignore: false
 };

@@ -15,7 +15,7 @@ export default class Event {
         if (callback) {
             let index = this.events[name].indexOf(callback);
             if (index !== -1) {
-                this.events[name] = this.events[name].splice(index, 1);
+                this.events[name].splice(index, 1);
             }
         } else {
             this.events[name] = [];

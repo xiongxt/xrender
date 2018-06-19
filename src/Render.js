@@ -12,10 +12,9 @@ export default class Render extends Event {
         this.root = new Node();
         this.root._setEnvo(envoParams);
         draggable.setRender(this);
-        bus
-            .on('repaint', () => {
-                this.render();
-            })
+        bus.on('repaint', () => {
+            this.render();
+        })
             .on('canvas/mousemove', ({ x, y }) => {
                 this.fireEvent('mousemove');
             })
@@ -40,11 +39,11 @@ export default class Render extends Event {
         });
     }
 
-    addElement (node) {
+    addChild (node) {
         this.root.addChild(node);
     }
 
-    delElement (node) {
+    delChild (node) {
         this.root.delChild(node);
     }
 }

@@ -24,20 +24,19 @@ export default class Node extends Event {
 
         this._checkCursor();
 
-        bus
-            .on('canvas/mousemove', ({ x, y }) => {
-                if (this.attr.ignore !== true && this.context) {
-                    this._setMouseLocation(x, y);
-                    let inPath = this._checkPointInPath();
-                    if (inPath === false) {
-                        this.recoredMouseStatus(false);
-                        this.fireMouseLeaveEvents();
-                    }
-                    if (inPath) {
-                        return this;
-                    }
+        bus.on('canvas/mousemove', ({ x, y }) => {
+            if (this.attr.ignore !== true && this.context) {
+                this._setMouseLocation(x, y);
+                let inPath = this._checkPointInPath();
+                if (inPath === false) {
+                    this.recoredMouseStatus(false);
+                    this.fireMouseLeaveEvents();
                 }
-            })
+                if (inPath) {
+                    return this;
+                }
+            }
+        })
             .on('canvas/click', ({ x, y }) => {
                 if (this.attr.ignore !== true && this.context) {
                     this._setMouseLocation(x, y);
@@ -167,7 +166,12 @@ export default class Node extends Event {
         this.children.push(node);
     }
 
-    delChild () {}
+    delChild (node) {
+        let index = this.children.indexOf(node);
+        if (index !== -1) {
+            this.children.splice(index, 1);
+        }
+    }
 
     setParent (parent) {
         this.parent = parent;

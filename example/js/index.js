@@ -1,26 +1,32 @@
 import 'babel-polyfill';
-import xrender from '../../dist/main';
+import xrender from '../../src/xrender';
 console.log(xrender);
 let render = xrender.init('#chart1', window.devicePixelRatio * 2);
 
-let circle = new xrender.Circle({
-    center: {
-        x: 50,
-        y: 50
+let circle = new xrender.Circle(
+    {
+        center: {
+            x: 50,
+            y: 50
+        },
+        radius: 50,
+        fill: true,
+        stroke: false,
+        'z-index': 5,
+        cursor: 'pointer',
+        'background-color': 'rgba(255,0,0,1)'
     },
-    radius: 50,
-    fill: true,
-    stroke: false,
-    'z-index': 5,
-    cursor: 'pointer',
-    'background-color': 'rgba(255,0,0,1)'
-}, {});
+    {}
+);
 
-circle.on('mouseenter', () => {
+let mouseenter = () => {
     circle.setStype({
         'background-color': '#ccc'
     });
-});
+};
+
+circle.on('mouseenter', mouseenter);
+// circle.off('mouseenter', mouseenter);
 circle.on('mouseleave', () => {
     circle.setStype({
         'background-color': 'blue'
@@ -43,7 +49,8 @@ let circle2 = new xrender.Circle({
 });
 
 circle2.on('click', () => {
-    circle2.animate({
+    circle2.animate(
+        {
             radius: 50,
             center: {
                 x: 350,
@@ -136,16 +143,17 @@ let collection = new xrender.Collection({
 });
 
 //
-render.addElement(circle2);
-// render.addElement(circle);
-// render.addElement(rect);
-render.addElement(collection);
+render.addChild(circle2);
+// render.addChild(circle);
+// render.addChild(rect);
+render.addChild(collection);
 collection.addChild(circle);
 collection.addChild(sector);
 collection.addChild(line);
 collection.addChild(font);
 collection.addChild(rect);
-render.addElement(img);
+collection.delChild(rect);
+render.addChild(img);
 render.render();
 console.log(render);
 window.render = render;
