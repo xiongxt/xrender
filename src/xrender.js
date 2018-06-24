@@ -20,9 +20,11 @@ function _setCanvasStyle(canvas, envoParams) {
 }
 
 export default {
-    init(selector) {
-        let scale = window.devicePixelRatio * 2;
-        let el = document.querySelector(selector);
+    init(selector, scale = window.devicePixelRatio * 2) {
+        let el = selector;
+        if (typeof (selector) === 'string') {
+            el = document.querySelector(selector);
+        }
         let canvas = document.createElement('canvas');
         let context = canvas.getContext('2d');
 

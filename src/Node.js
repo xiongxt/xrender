@@ -6,12 +6,12 @@ import util from './helpers/util';
 import draggable from './event/draggable';
 import animation from './helpers/animation';
 export default class Node extends Event {
-    constructor (myStyle = {}, myAttrs = {}) {
+    constructor(myStyle = {}, myAttrs = {}) {
         super();
         this.id = util.guid();
         this.style = Object.assign({}, style);
         this.attr = Object.assign({}, attribute);
-        this.setStype(myStyle, false);
+        this.setStyle(myStyle, false);
         this.setAttr(myAttrs, false);
         util.mixin(this, animation);
         this.children = [];
@@ -24,20 +24,26 @@ export default class Node extends Event {
 
         this._checkCursor();
 
-        bus.on('canvas/mousemove', ({ x, y }) => {
-            if (this.attr.ignore !== true && this.context) {
-                this._setMouseLocation(x, y);
-                let inPath = this._checkPointInPath();
-                if (inPath === false) {
-                    this.recoredMouseStatus(false);
-                    this.fireMouseLeaveEvents();
+        bus.on('canvas/mousemove', ({
+                x,
+                y
+            }) => {
+                if (this.attr.ignore !== true && this.context) {
+                    this._setMouseLocation(x, y);
+                    let inPath = this._checkPointInPath();
+                    if (inPath === false) {
+                        this.recoredMouseStatus(false);
+                        this.fireMouseLeaveEvents();
+                    }
+                    if (inPath) {
+                        return this;
+                    }
                 }
-                if (inPath) {
-                    return this;
-                }
-            }
-        })
-            .on('canvas/click', ({ x, y }) => {
+            })
+            .on('canvas/click', ({
+                x,
+                y
+            }) => {
                 if (this.attr.ignore !== true && this.context) {
                     this._setMouseLocation(x, y);
                     let inPath = this._checkPointInPath();
@@ -46,7 +52,10 @@ export default class Node extends Event {
                     }
                 }
             })
-            .on('canvas/mousedown', ({ x, y }) => {
+            .on('canvas/mousedown', ({
+                x,
+                y
+            }) => {
                 if (this.attr.ignore !== true && this.context) {
                     this._setMouseLocation(x, y);
                     let inPath = this._checkPointInPath();
@@ -57,7 +66,7 @@ export default class Node extends Event {
             });
     }
 
-    _setMouseLocation (x, y) {
+    _setMouseLocation(x, y) {
         this.mouseX = x;
         this.mouseY = y;
         this._setOffsetPosition();
@@ -66,7 +75,7 @@ export default class Node extends Event {
     /**
      * 记录鼠标位置相对于当前图形的坐标
      */
-    _setOffsetPosition () {
+    _setOffsetPosition() {
         if (this.offsetChangeAble) {
             this.offsetX = this.mouseX - this.style.start.x;
             this.offsetY = this.mouseY - this.style.start.y;
@@ -76,8 +85,8 @@ export default class Node extends Event {
     /**
      * 拖拽时，重新设置图形的位置信息
      */
-    _setDraggingPos () {
-        this.setStype({
+    _setDraggingPos() {
+        this.setStyle({
             start: {
                 x: this.mouseX - this.offsetX,
                 y: this.mouseY - this.offsetY
@@ -85,7 +94,7 @@ export default class Node extends Event {
         });
     }
 
-    _checkPointInPath () {
+    _checkPointInPath() {
         this._renderSelf(this.context2);
         let inPath = false;
         inPath = this.context2.isPointInPath(
@@ -96,9 +105,9 @@ export default class Node extends Event {
         return inPath;
     }
 
-    _renderSelf () {}
+    _renderSelf() {}
 
-    _renderChildren () {
+    _renderChildren() {
         let sortArray = this.children.sort((item1, item2) => {
             return item1.style['z-index'] > item2.style['z-index'];
         });
@@ -107,12 +116,12 @@ export default class Node extends Event {
         });
     }
 
-    _setEnvo (envoParams) {
+    _setEnvo(envoParams) {
         this.envoParams = envoParams;
         util.mixin(this, envoParams);
     }
 
-    _checkCursor () {
+    _checkCursor() {
         if (this.style['cursor'] !== 'default' && this.usedCursor !== true) {
             this.usedCursor = true;
             this.on('mouseenter', () => {
@@ -124,7 +133,7 @@ export default class Node extends Event {
         }
     }
 
-    render () {
+    render() {
         if (this.attr.ignore !== true && this.context) {
             this.renderIndex = this.envoParams.renderIndex + 1;
             this.envoParams.renderIndex = this.renderIndex;
@@ -133,15 +142,15 @@ export default class Node extends Event {
         }
     }
 
-    lockOffset () {
+    lockOffset() {
         this.offsetChangeAble = false;
     }
 
-    unlockOffset () {
+    unlockOffset() {
         this.offsetChangeAble = true;
     }
 
-    setStype (style, repaint = true) {
+    setStyle(style, repaint = true) {
         util.mixin(this.style, style);
         this.originStyle = util.clone(this.style);
         this._checkCursor();
@@ -150,7 +159,7 @@ export default class Node extends Event {
         }
     }
 
-    setAttr (attr, repaint = false) {
+    setAttr(attr, repaint = false) {
         util.mixin(this.attr, attr);
         if (this.attr.draggable) {
             draggable.init(this);
@@ -160,20 +169,20 @@ export default class Node extends Event {
         }
     }
 
-    addChild (node) {
+    addChild(node) {
         node._setEnvo(this.envoParams);
         node.setParent(this);
         this.children.push(node);
     }
 
-    delChild (node) {
+    delChild(node) {
         let index = this.children.indexOf(node);
         if (index !== -1) {
             this.children.splice(index, 1);
         }
     }
 
-    setParent (parent) {
+    setParent(parent) {
         this.parent = parent;
     }
 }

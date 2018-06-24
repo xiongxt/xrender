@@ -50,7 +50,7 @@ export default {
                 let rate =
                     (curTime - animateOptions.start) / animateOptions.allTime;
                 if (rate >= 1) {
-                    this.setStype(animateOptions.dest);
+                    this.setStyle(animateOptions.dest);
                     this.fireEvent('afterAnimate');
                     delete this.animateOptions;
                 } else {
@@ -73,7 +73,7 @@ export default {
                             }
                             util.setValueByAttr(dest, keyUrl, val);
                         });
-                        this.setStype(dest);
+                        this.setStyle(dest);
                     }
                     this._startAnimate();
                 }

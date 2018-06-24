@@ -95,7 +95,7 @@ export default class Sector extends Node {
      * 拖拽时，重新设置图形的位置信息
      */
     _setDraggingPos () {
-        this.setStype({
+        this.setStyle({
             center: {
                 x:
                     this.style.center.x +

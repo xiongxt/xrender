@@ -60,7 +60,7 @@ export default class Line extends Node {
      * 拖拽时，重新设置图形的位置信息
      */
     _setDraggingPos () {
-        this.setStype({
+        this.setStyle({
             start: {
                 x: this.mouseX - this.offsetX,
                 y: this.mouseY - this.offsetY

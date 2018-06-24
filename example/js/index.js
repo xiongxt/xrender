@@ -1,26 +1,23 @@
 import 'babel-polyfill';
 import xrender from '../../src/xrender';
 console.log(xrender);
-let render = xrender.init('#chart1', window.devicePixelRatio * 2);
+let render = xrender.init(document.querySelector('#chart1'), window.devicePixelRatio * 2);
 
-let circle = new xrender.Circle(
-    {
-        center: {
-            x: 50,
-            y: 50
-        },
-        radius: 50,
-        fill: true,
-        stroke: false,
-        'z-index': 5,
-        cursor: 'pointer',
-        'background-color': 'rgba(255,0,0,1)'
+let circle = new xrender.Circle({
+    center: {
+        x: 50,
+        y: 50
     },
-    {}
-);
+    radius: 50,
+    fill: true,
+    stroke: false,
+    'z-index': 5,
+    cursor: 'pointer',
+    'background-color': 'rgba(255,0,0,1)'
+}, {});
 
 let mouseenter = () => {
-    circle.setStype({
+    circle.setStyle({
         'background-color': '#ccc'
     });
 };
@@ -28,7 +25,7 @@ let mouseenter = () => {
 circle.on('mouseenter', mouseenter);
 // circle.off('mouseenter', mouseenter);
 circle.on('mouseleave', () => {
-    circle.setStype({
+    circle.setStyle({
         'background-color': 'blue'
     });
 });
@@ -49,8 +46,7 @@ let circle2 = new xrender.Circle({
 });
 
 circle2.on('click', () => {
-    circle2.animate(
-        {
+    circle2.animate({
             radius: 50,
             center: {
                 x: 350,
@@ -76,7 +72,7 @@ let rect = new xrender.Rect({
 
 rect.on('click', () => {
     console.log(rect);
-    rect.setStype({
+    rect.setStyle({
         'background-color': 'gray'
     });
 });
@@ -116,12 +112,12 @@ let font = new xrender.Font({
     color: 'pink'
 });
 font.on('mouseenter', () => {
-    font.setStype({
+    font.setStyle({
         color: 'blue'
     });
 });
 font.on('mouseleave', () => {
-    font.setStype({
+    font.setStyle({
         color: 'yellow'
     });
 });
