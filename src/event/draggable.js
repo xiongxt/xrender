@@ -1,7 +1,9 @@
 let draggingNode;
 
-function mousedown (node) {
+function mousedown(node) {
+    console.log('mousedown');
     if (node.attr.draggable) {
+        console.log('draggingNode', 'start', draggingNode)
         draggingNode = node;
         draggingNode.dragging = true;
         draggingNode.lockOffset();
@@ -9,7 +11,7 @@ function mousedown (node) {
     }
 }
 
-function cancelDrag () {
+function cancelDrag() {
     if (draggingNode && draggingNode.dragging) {
         draggingNode.dragging = false;
         draggingNode.unlockOffset();
@@ -17,7 +19,7 @@ function cancelDrag () {
     }
 }
 
-function initRenderEvents (render) {
+function initRenderEvents(render) {
     render.on('mousemove', () => {
         if (draggingNode && draggingNode.dragging) {
             draggingNode._setDraggingPos();
@@ -35,8 +37,9 @@ function initRenderEvents (render) {
 }
 
 export default {
-    init (node) {
+    init(node) {
         if (node.attr.draggable) {
+            console.log(node);
             node.on('mousedown', mousedown);
             // node.on('mouseleave', cancelDrag);
         } else {
@@ -45,7 +48,7 @@ export default {
         }
     },
 
-    setRender (render) {
+    setRender(render) {
         initRenderEvents(render);
     }
 };

@@ -1,6 +1,6 @@
 import Node from '../Node';
 export default class Line extends Node {
-    _renderSelf (context) {
+    _renderSelf(context) {
         if (!context) {
             context = this.context;
         }
@@ -19,11 +19,12 @@ export default class Line extends Node {
         context.closePath();
     }
 
-    _checkPointInPath () {
+    _checkPointInPath() {
         let rate1 =
             (this.style.end.y - this.style.start.y) /
             (this.style.end.x - this.style.start.x);
         let mx;
+        let res;
 
         if (rate1 === 0) {
             mx = this.style.end.y;
@@ -37,41 +38,30 @@ export default class Line extends Node {
             this.mouseX >= Math.min(this.style.start.x, this.style.end.x)
         ) {
             if (rate1 === 0) {
-                return Math.abs(this.mouseY - this.style.end.y) < 1;
+                res = Math.abs(this.mouseY - this.style.end.y) < 3;
             } else {
-                return Math.abs(mx - this.mouseX) < 1;
+                res = Math.abs(mx - this.mouseX) < 3;
             }
         } else {
-            return false;
+            res = false;
         }
-    }
-
-    /**
-     * 记录鼠标位置相对于当前图形的坐标
-     */
-    _setOffsetPosition () {
-        if (this.offsetChangeAble) {
-            this.offsetX = this.mouseX - this.style.start.x;
-            this.offsetY = this.mouseY - this.style.start.y;
-        }
+        return res;
     }
 
     /**
      * 拖拽时，重新设置图形的位置信息
      */
-    _setDraggingPos () {
+    _setDraggingPos() {
         this.setStyle({
             start: {
                 x: this.mouseX - this.offsetX,
                 y: this.mouseY - this.offsetY
             },
             end: {
-                x:
-                    this.mouseX -
+                x: this.mouseX -
                     this.offsetX +
                     (this.style.end.x - this.style.start.x),
-                y:
-                    this.mouseY -
+                y: this.mouseY -
                     this.offsetY +
                     (this.style.end.y - this.style.start.y)
             }

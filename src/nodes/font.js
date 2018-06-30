@@ -87,7 +87,6 @@ export default class Font extends Node {
             let _strLen = 0;
             str.split('').forEach(char => {
                 let charLen = config[char];
-                console.log(char);
                 if (!charLen) {
                     charLen = config.hans;
                 }
@@ -100,7 +99,6 @@ export default class Font extends Node {
                         _strLen += charLen;
                         _str += char;
                     } else {
-                        console.log(_str);
                         res.push(_str);
                         _strLen = charLen;
                         _str = char;
@@ -114,7 +112,6 @@ export default class Font extends Node {
         this.font.splitedText = res;
         this._measureTextWidth();
         this._measureTextHeight();
-        console.log(res);
         return res;
     }
 

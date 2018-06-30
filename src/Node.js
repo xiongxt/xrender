@@ -24,45 +24,45 @@ export default class Node extends Event {
         this._checkCursor();
 
         bus.on('canvas/mousemove', ({
-                x,
-                y
-            }) => {
-                if (this.attr.ignore !== true && this.context) {
-                    this._setMouseLocation(x, y);
-                    let inPath = this._checkPointInPath();
-                    if (inPath === false) {
-                        this.recoredMouseStatus(false);
-                        this.fireMouseLeaveEvents();
-                    }
-                    if (inPath) {
-                        return this;
-                    }
+            x,
+            y
+        }) => {
+            if (this.attr.ignore !== true && this.context) {
+                this._setMouseLocation(x, y);
+                let inPath = this._checkPointInPath();
+                if (inPath === false) {
+                    this.recoredMouseStatus(false);
+                    this.fireMouseLeaveEvents();
                 }
-            })
-            .on('canvas/click', ({
-                x,
-                y
-            }) => {
-                if (this.attr.ignore !== true && this.context) {
-                    this._setMouseLocation(x, y);
-                    let inPath = this._checkPointInPath();
-                    if (inPath) {
-                        return this;
-                    }
+                if (inPath) {
+                    return this;
                 }
-            })
-            .on('canvas/mousedown', ({
-                x,
-                y
-            }) => {
-                if (this.attr.ignore !== true && this.context) {
-                    this._setMouseLocation(x, y);
-                    let inPath = this._checkPointInPath();
-                    if (inPath) {
-                        return this;
-                    }
+            }
+        });
+        bus.on('canvas/click', ({
+            x,
+            y
+        }) => {
+            if (this.attr.ignore !== true && this.context) {
+                this._setMouseLocation(x, y);
+                let inPath = this._checkPointInPath();
+                if (inPath) {
+                    return this;
                 }
-            });
+            }
+        });
+        bus.on('canvas/mousedown', ({
+            x,
+            y
+        }) => {
+            if (this.attr.ignore !== true && this.context) {
+                this._setMouseLocation(x, y);
+                let inPath = this._checkPointInPath();
+                if (inPath) {
+                    return this;
+                }
+            }
+        });
     }
 
     _setMouseLocation(x, y) {
@@ -77,7 +77,7 @@ export default class Node extends Event {
     _setOffsetPosition() {
         if (this.offsetChangeAble) {
             this.offsetX = this.mouseX - this.style.start.x;
-            this.offsetX = this.mouseY - this.style.start.y;
+            this.offsetY = this.mouseY - this.style.start.y;
         }
     }
 
