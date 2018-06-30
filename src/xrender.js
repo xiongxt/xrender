@@ -20,7 +20,7 @@ function _setCanvasStyle(canvas, envoParams) {
 }
 
 export default {
-    init(selector, scale = window.devicePixelRatio * 2) {
+    init(selector, scale = window.devicePixelRatio) {
         let el = selector;
         if (typeof (selector) === 'string') {
             el = document.querySelector(selector);

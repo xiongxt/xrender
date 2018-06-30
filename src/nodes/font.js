@@ -1,6 +1,6 @@
 import Node from '../Node';
 export default class Font extends Node {
-    _renderSelf (context) {
+    _renderSelf(context) {
         if (!context) {
             context = this.context;
         }
@@ -23,14 +23,14 @@ export default class Font extends Node {
                 str,
                 this.style.start.x * this.canvasScale,
                 this.style.start.y * this.canvasScale +
-                    this.style['font-size'] * this.canvasScale * index +
-                    this.style['row-spacing'] * this.canvasScale * index
+                this.style['font-size'] * this.canvasScale * index +
+                this.style['row-spacing'] * this.canvasScale * index
             );
         });
         context.closePath();
     }
 
-    _getTextWidthConfig (context) {
+    _getTextWidthConfig(context) {
         if (!context) {
             context = this.context;
         }
@@ -41,7 +41,7 @@ export default class Font extends Node {
         if (!this.font.textWidthConfig[font]) {
             context.font = font;
             let str =
-                ' abcdefghijklmnopqretuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890~!@#$%^&*()_+`-=,./;[]<>?:{}|\\\'"';
+                ' abcdefghijklmnopqretuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890~!@#$%^&*()_+`-=,./;[]<>?:{}|\\\'"，。/？；‘“：【】「」|、！）（';
             let res = {};
             str.split('').forEach(char => {
                 res[char] = context.measureText(char).width / this.canvasScale;
@@ -52,7 +52,7 @@ export default class Font extends Node {
         return this.font.textWidthConfig[this.style['font-family']];
     }
 
-    _measureTextWidth (context) {
+    _measureTextWidth(context) {
         if (!context) {
             context = this.context;
         }
@@ -68,14 +68,14 @@ export default class Font extends Node {
         this.style.width = maxLen;
     }
 
-    _measureTextHeight () {
+    _measureTextHeight() {
         let size = this.font.splitedText.length;
         this.style.height =
             this.style['font-size'] * size +
             this.style['row-spacing'] * (size - 1);
     }
 
-    _autoSplitText () {
+    _autoSplitText() {
         let res = [];
         let str = this.style['font-text'];
         if (this.style['max-width'] === 'auto') {
@@ -87,6 +87,7 @@ export default class Font extends Node {
             let _strLen = 0;
             str.split('').forEach(char => {
                 let charLen = config[char];
+                console.log(char);
                 if (!charLen) {
                     charLen = config.hans;
                 }
@@ -99,20 +100,25 @@ export default class Font extends Node {
                         _strLen += charLen;
                         _str += char;
                     } else {
+                        console.log(_str);
                         res.push(_str);
                         _strLen = charLen;
                         _str = char;
                     }
                 }
             });
+            if (_str !== '') {
+                res.push(_str);
+            }
         }
         this.font.splitedText = res;
         this._measureTextWidth();
         this._measureTextHeight();
+        console.log(res);
         return res;
     }
 
-    _checkPointInPath () {
+    _checkPointInPath() {
         let xSpace = this.mouseX - this.style.start.x;
         let ySpace = this.mouseY - this.style.start.y;
         return (

@@ -106,10 +106,10 @@ let font = new xrender.Font({
         x: 0,
         y: 0
     },
-    'font-size': 20,
-    'font-text': 'abci我g打\n你一次可以放弃',
-    'max-width': 'auto',
-    color: 'pink'
+    'font-size': 16,
+    'font-text': '你好，世界。\n这是xrender的文字图形',
+    color: 'blue',
+    'max-width': '100'
 });
 font.on('mouseenter', () => {
     font.setStyle({
@@ -131,19 +131,19 @@ let img = new xrender.Image({
 
 let collection = new xrender.Collection({
     start: {
-        x: 200,
-        y: 200
+        x: 100,
+        y: 100
     },
     width: 400,
     height: 400
 });
 
 //
-render.addChild(circle2);
+// render.addChild(circle2);
 // render.addChild(circle);
 // render.addChild(rect);
 render.addChild(collection);
-collection.addChild(circle);
+// collection.addChild(circle);
 collection.addChild(sector);
 collection.addChild(line);
 collection.addChild(font);

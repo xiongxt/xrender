@@ -1,9 +1,9 @@
 export default class Event {
-    constructor () {
+    constructor() {
         this.events = {};
     }
 
-    on (name = '', callback = () => {}) {
+    on(name = '', callback = () => {}) {
         if (this.events[name]) {
             this.events[name].push(callback);
         } else {
@@ -11,7 +11,7 @@ export default class Event {
         }
     }
 
-    off (name = '', callback) {
+    off(name = '', callback) {
         if (callback) {
             let index = this.events[name].indexOf(callback);
             if (index !== -1) {
@@ -22,7 +22,7 @@ export default class Event {
         }
     }
 
-    getEventCallbacks (name) {
+    getEventCallbacks(name) {
         if (this.events[name]) {
             return this.events[name];
         } else {
@@ -30,7 +30,7 @@ export default class Event {
         }
     }
 
-    fireEvent (name, data = {}) {
+    fireEvent(name, data = {}) {
         if (this.getEventCallbacks(name).length) {
             this.events[name].forEach(func => {
                 func(this, data);
@@ -38,7 +38,7 @@ export default class Event {
         }
     }
 
-    fireMouseMoveEvents () {
+    fireMouseMoveEvents() {
         this.recoredMouseStatus(true);
         let length = this.mouseStatus.length;
         let lastStatus = this.mouseStatus[length - 1];
@@ -49,7 +49,7 @@ export default class Event {
         this.fireEvent('mousemove');
     }
 
-    fireMouseLeaveEvents () {
+    fireMouseLeaveEvents() {
         let length = this.mouseStatus.length;
         let lastStatus = this.mouseStatus[length - 1];
         let lastStatus2 = this.mouseStatus[length - 2];
@@ -59,16 +59,16 @@ export default class Event {
         }
     }
 
-    recoredMouseStatus (status = false) {
+    recoredMouseStatus(status = false) {
         this.mouseStatus.push(status);
         this.mouseStatus = this.mouseStatus.slice(-2);
     }
 
-    fireClickEvents () {
+    fireClickEvents() {
         this.fireEvent('click');
     }
 
-    fireMoveNotInPath () {
+    fireMoveNotInPath() {
         this.recoredMouseStatus(false);
         this.fireMouseLeaveEvents();
     }

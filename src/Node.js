@@ -15,7 +15,6 @@ export default class Node extends Event {
         this.setAttr(myAttrs, false);
         util.mixin(this, animation);
         this.children = [];
-        this.needCheck = false;
         this.parent = null;
         this.isPointInPath = false;
         this.mouseStatus = [];
@@ -78,7 +77,7 @@ export default class Node extends Event {
     _setOffsetPosition() {
         if (this.offsetChangeAble) {
             this.offsetX = this.mouseX - this.style.start.x;
-            this.offsetY = this.mouseY - this.style.start.y;
+            this.offsetX = this.mouseY - this.style.start.y;
         }
     }
 
