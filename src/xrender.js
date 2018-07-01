@@ -16,17 +16,19 @@ function _setCanvasStyle(canvas, envoParams) {
     canvas.style.position = 'absolute';
     canvas.style.left = 0;
     canvas.style.top = 0;
-    canvas.style.backgroundColor = '#fff';
+    // canvas.style.backgroundColor = backgroundColor;
 }
 
 export default {
-    init(selector, scale = window.devicePixelRatio) {
+    init(selector, scale = window.devicePixelRatio, backgroundColor = '#fff') {
         let el = selector;
         if (typeof (selector) === 'string') {
             el = document.querySelector(selector);
         }
         let canvas = document.createElement('canvas');
         let context = canvas.getContext('2d');
+
+        window.context = context;
 
         let canvas2 = document.createElement('canvas');
         let context2 = canvas2.getContext('2d');
@@ -54,7 +56,7 @@ export default {
         el.appendChild(canvas);
         el.appendChild(canvas2);
 
-        let render = new Render(envoParams);
+        let render = new Render(envoParams, backgroundColor);
 
         el.addEventListener('click', event => {
             bus.trigger('canvas/click', {

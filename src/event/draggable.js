@@ -1,9 +1,7 @@
 let draggingNode;
 
 function mousedown(node) {
-    console.log('mousedown');
     if (node.attr.draggable) {
-        console.log('draggingNode', 'start', draggingNode)
         draggingNode = node;
         draggingNode.dragging = true;
         draggingNode.lockOffset();
@@ -39,7 +37,6 @@ function initRenderEvents(render) {
 export default {
     init(node) {
         if (node.attr.draggable) {
-            console.log(node);
             node.on('mousedown', mousedown);
             // node.on('mouseleave', cancelDrag);
         } else {

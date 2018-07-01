@@ -4,7 +4,7 @@ import color from './color';
 /**
  * 过滤掉没有改变的属性
  */
-function getAnimateOptions (node, keyUrls, time) {
+function getAnimateOptions(node, keyUrls, time) {
     let curTime = new Date().getTime();
     let animateOptions = {
         start: curTime,
@@ -33,16 +33,15 @@ function getAnimateOptions (node, keyUrls, time) {
 }
 
 export default {
-    animate (dest, time = 1000, easying = 'linear') {
+    animate(dest, time = 1000, easying = 'linear') {
         let keyUrls = util.getObjectKeys(dest);
         this.animateOptions = getAnimateOptions(this, keyUrls, time);
         this.animateOptions.dest = dest;
         this.animateOptions.easying = easying;
-        console.log(this.animateOptions);
         this.fireEvent('beforeAnimate');
         this._startAnimate();
     },
-    _startAnimate () {
+    _startAnimate() {
         requestAnimationFrame(() => {
             let curTime = new Date().getTime();
             let animateOptions = this.animateOptions;
@@ -56,7 +55,9 @@ export default {
                 } else {
                     rate = easying[animateOptions.easying](rate);
                     if (rate !== 0) {
-                        this.fireEvent('duringAnimate', { rate });
+                        this.fireEvent('duringAnimate', {
+                            rate
+                        });
                         let dest = {};
                         let changlist = animateOptions.changlist;
                         Object.keys(changlist).forEach(keyUrl => {
