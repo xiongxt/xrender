@@ -23,7 +23,8 @@ export default class Render extends Event {
         });
         this.root._setEnvo(envoParams);
         draggable.setRender(this);
-        bus.on('repaint', () => {
+        bus
+            .on('repaint', () => {
                 this.render();
             })
             .on('canvas/mousemove', ({
@@ -42,13 +43,7 @@ export default class Render extends Event {
 
     render() {
         requestAnimationFrame(() => {
-            // this.context.clearRect(
-            //     0,
-            //     0,
-            //     this.envoParams.canvasWidth,
-            //     this.envoParams.canvasHeight
-            // );
-            console.time('render')
+            console.time('render');
             this.envoParams.renderIndex = 0;
             this.root.render();
             console.timeEnd('render');

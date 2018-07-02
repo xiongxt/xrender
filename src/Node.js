@@ -17,6 +17,9 @@ export default class Node extends Event {
         this.children = [];
         this.parent = null;
         this.isPointInPath = false;
+
+        this.cache = {};
+
         this.mouseStatus = [];
 
         this.offsetChangeAble = true;
@@ -183,5 +186,13 @@ export default class Node extends Event {
 
     setParent(parent) {
         this.parent = parent;
+    }
+
+    getCache(key) {
+        return this.cache[key];
+    }
+
+    setCache(key, value) {
+        this.cache[key] = value;
     }
 }
